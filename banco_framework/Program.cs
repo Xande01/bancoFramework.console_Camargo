@@ -1,4 +1,5 @@
-﻿using Domain.Model;
+﻿using Application;
+using Domain.Model;
 
 internal class Program
 {
@@ -13,6 +14,7 @@ internal class Program
 
     static Pessoa Identificacao()
     {
+        var cliente = new Cliente();
         var pessoa = new Pessoa();
         var opçao = 0;
 
@@ -24,6 +26,10 @@ internal class Program
 
         Console.WriteLine("Seu CPF:");
         pessoa.Cpf = Console.ReadLine();
+
+        Console.WriteLine("Seu saldo:");
+        cliente.Saldo = float.Parse(Console.ReadLine());
+
         Console.Clear();
 
         do
@@ -42,11 +48,34 @@ internal class Program
             switch (opçao)
             {
                 case 1:
-                    Console.WriteLine("Depósito selecionado");
+                    Console.Clear();
+                    Console.WriteLine("Deposito selecionado ");
+                    Console.WriteLine("Digite o valor: ");
+                    float valorDeposito = float.Parse(Console.ReadLine());
+                    
+                    var soma = new Calculo();
+                    cliente.Saldo = soma.Soma(cliente.Saldo, valorDeposito);
+                    Console.WriteLine($"Depósito de R$ {valorDeposito} realizado com sucesso!");
+                    Console.WriteLine($"Saldo atual é R$ {cliente.Saldo}");
                     break;
 
                 case 2:
                     Console.WriteLine("Saque selecionado");
+                    Console.WriteLine("Digite o valor: ");
+                    float valorSaque = float.Parse(Console.ReadLine());
+                    if (valorSaque > cliente.Saldo)
+                        {
+                        Console.WriteLine("Saldo insuficiente para realizar o saque.");
+                        }
+                    else
+                    {
+                        var subtracao = new Calculo();
+                        cliente.Saldo = subtracao.Subtracao(cliente.Saldo, valorSaque);
+
+                        Console.WriteLine($"Saque de R$ {valorSaque} realizado com sucesso!");
+                        Console.WriteLine($"Saldo atual é R$ {cliente.Saldo}");
+                    }
+
                     break;
 
                 case 3:
