@@ -1,5 +1,6 @@
 ﻿using Application;
 using Domain.Model;
+using CpfCnpjLibrary;
 
 internal class Program
 {
@@ -27,9 +28,17 @@ internal class Program
         Console.WriteLine("Seu CPF:");
         pessoa.Cpf = Console.ReadLine();
 
+
+        if (!Cpf.Validar(pessoa.Cpf))
+        {
+            Console.WriteLine("CPF digitado não é válido");            
+            return Identificacao();
+            
+        }
+
         Console.WriteLine("Seu saldo:");
         cliente.Saldo = float.Parse(Console.ReadLine());
-
+                
         Console.Clear();
 
         do
